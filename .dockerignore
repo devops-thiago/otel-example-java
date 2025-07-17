@@ -1,0 +1,63 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+OBSERVABILITY.md
+*.md
+
+# IDE files
+.vscode
+.idea
+*.iml
+.settings
+.project
+.classpath
+
+# Build artifacts (except what we need)
+target/
+!target/*.jar
+.mvn/wrapper/maven-wrapper.jar
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Docker files
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.override.yml
+
+# Configuration examples
+otel-config-examples.properties
+
+# Config directory (observability stack configs)
+config/
+
+# Test files
+src/test/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Node modules (if any)
+node_modules/
+
+# Maven wrapper downloaded files
+.mvn/wrapper/maven-wrapper.properties 
