@@ -3,6 +3,7 @@
 [![CI/CD Pipeline](https://github.com/devops-thiago/otel-example-java/actions/workflows/ci.yml/badge.svg)](https://github.com/devops-thiago/otel-example-java/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/devops-thiago/otel-example-java/branch/main/graph/badge.svg)](https://codecov.io/gh/devops-thiago/otel-example-java)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=devops-thiago_otel-example-java&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=devops-thiago_otel-example-java)
+[![Dependabot Status](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg)](https://github.com/devops-thiago/otel-example-java/network/dependencies)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-24-orange.svg)](https://openjdk.org/projects/jdk/24/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
