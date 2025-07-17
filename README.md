@@ -18,7 +18,7 @@ A comprehensive Java Spring Boot application demonstrating a complete CRUD API w
 - **CRUD Operations**: Complete Create, Read, Update, Delete functionality for User entities
 - **OpenTelemetry Integration**: Distributed tracing with manual and automatic instrumentation
 - **Full Observability Stack**: Grafana Alloy, Tempo, Mimir, Loki, MinIO, and Grafana
-- **Spring Boot 3.3.5**: Latest Spring Boot features and optimizations
+- **Spring Boot 3.4.5**: Latest Spring Boot features and optimizations
 - **Virtual Threads**: Enabled for high-performance concurrent request handling
 - **H2 Database**: In-memory database for easy testing and development
 - **Input Validation**: Comprehensive validation using Bean Validation
@@ -30,7 +30,7 @@ A comprehensive Java Spring Boot application demonstrating a complete CRUD API w
 ## Technologies Used
 
 - **Java 24**
-- **Spring Boot 3.3.5**
+- **Spring Boot 3.4.5**
 - **Spring Data JPA**
 - **H2 Database**
 - **OpenTelemetry 1.32.0**
