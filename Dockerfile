@@ -36,6 +36,9 @@ WORKDIR /app
 # Copy the JAR file from build stage
 COPY --from=build /app/target/otel-crud-api-*.jar app.jar
 
+# Copy the OpenTelemetry agent JAR file from build stage
+COPY --from=build /app/target/opentelemetry-javaagent.jar opentelemetry-javaagent.jar
+
 # Create directories for logs and temporary files
 RUN mkdir -p /app/logs /app/tmp && \
     chown -R appuser:appuser /app
@@ -70,4 +73,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:8080/actuator/health || exit 1
 
 # Default command
-CMD ["sh", "-c", "java $JAVA_OPTS -jar app.jar"] 
+CMD ["sh", "-c", "java $JAVA_OPTS -javaagent:opentelemetry-javaagent.jar -jar app.jar"]
