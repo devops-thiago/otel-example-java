@@ -8,7 +8,7 @@
 [![Java](https://img.shields.io/badge/Java-24-orange.svg)](https://openjdk.org/projects/jdk/24/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://hub.docker.com/)
-[![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-2.17.1-blueviolet.svg)](https://opentelemetry.io/)
+[![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-2.18.1-blueviolet.svg)](https://opentelemetry.io/)
 [![JaCoCo](https://img.shields.io/badge/JaCoCo-0.8.13-brightgreen.svg)](https://www.jacoco.org/jacoco/)
 
 A comprehensive Java Spring Boot application demonstrating a complete CRUD API with OpenTelemetry integration and full observability stack for distributed tracing, metrics, and log aggregation.
@@ -33,7 +33,7 @@ A comprehensive Java Spring Boot application demonstrating a complete CRUD API w
 - **Spring Boot 3.4.5**
 - **Spring Data JPA**
 - **H2 Database**
-- **OpenTelemetry 1.32.0**
+- **OpenTelemetry 2.18.1**
 - **JaCoCo 0.8.13**
 - **Maven**
 - **Bean Validation**
