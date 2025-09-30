@@ -599,10 +599,4 @@ The CI/CD pipeline runs on:
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Support
 
-For questions or issues, please open an issue in the GitHub repository.
-
----
-
-Happy coding and monitoring! 🚀
