@@ -6,10 +6,10 @@
 [![Dependabot Status](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg)](https://github.com/devops-thiago/otel-example-java/network/dependencies)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-24-orange.svg)](https://openjdk.org/projects/jdk/24/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.7-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://hub.docker.com/)
-[![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-2.18.1-blueviolet.svg)](https://opentelemetry.io/)
-[![JaCoCo](https://img.shields.io/badge/JaCoCo-0.8.13-brightgreen.svg)](https://www.jacoco.org/jacoco/)
+[![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-2.25.0-blueviolet.svg)](https://opentelemetry.io/)
+[![JaCoCo](https://img.shields.io/badge/JaCoCo-0.8.14-brightgreen.svg)](https://www.jacoco.org/jacoco/)
 
 A comprehensive Java Spring Boot application demonstrating a complete CRUD API with OpenTelemetry integration and full observability stack for distributed tracing, metrics, and log aggregation.
 
@@ -18,7 +18,7 @@ A comprehensive Java Spring Boot application demonstrating a complete CRUD API w
 - **CRUD Operations**: Complete Create, Read, Update, Delete functionality for User entities
 - **OpenTelemetry Integration**: Distributed tracing with manual and automatic instrumentation
 - **Full Observability Stack**: Grafana Alloy, Tempo, Mimir, Loki, MinIO, and Grafana
-- **Spring Boot 3.4.5**: Latest Spring Boot features and optimizations
+- **Spring Boot 3.5.7**: Latest Spring Boot features and optimizations
 - **Virtual Threads**: Enabled for high-performance concurrent request handling
 - **H2 Database**: In-memory database for easy testing and development
 - **Input Validation**: Comprehensive validation using Bean Validation
@@ -30,11 +30,11 @@ A comprehensive Java Spring Boot application demonstrating a complete CRUD API w
 ## Technologies Used
 
 - **Java 24**
-- **Spring Boot 3.4.5**
+- **Spring Boot 3.5.7**
 - **Spring Data JPA**
 - **H2 Database**
-- **OpenTelemetry 2.18.1**
-- **JaCoCo 0.8.13**
+- **OpenTelemetry 2.25.0**
+- **JaCoCo 0.8.14**
 - **Maven**
 - **Bean Validation**
 - **Spring Boot Actuator**
