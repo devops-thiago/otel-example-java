@@ -1,6 +1,11 @@
 package br.com.arquivolivre.otelcrudapi.repository;
 
+import static org.assertj.core.api.Assertions.*;
+
 import br.com.arquivolivre.otelcrudapi.model.User;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,21 +13,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
-
 @DataJpaTest
 @Sql(scripts = "/test-data-cleanup.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class UserRepositoryTest {
 
-    @Autowired
-    private TestEntityManager entityManager;
+    @Autowired private TestEntityManager entityManager;
 
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
 
     private User johnDoe;
     private User janeSmith;
@@ -31,32 +28,36 @@ class UserRepositoryTest {
     void setUp() {
         // Insert test data with specific timestamps using native SQL
         // This bypasses the @CreationTimestamp and @UpdateTimestamp annotations
-        
+
         LocalDateTime fiveDaysAgo = LocalDateTime.now().minusDays(5);
         LocalDateTime twoDaysAgo = LocalDateTime.now().minusDays(2);
-        
+
         // Insert John Doe (older user)
-        entityManager.getEntityManager().createNativeQuery(
-            "INSERT INTO users (name, email, bio, created_at, updated_at) VALUES (?, ?, ?, ?, ?)"
-        ).setParameter(1, "John Doe")
-         .setParameter(2, "john.doe@example.com")
-         .setParameter(3, "Software Engineer")
-         .setParameter(4, fiveDaysAgo)
-         .setParameter(5, fiveDaysAgo)
-         .executeUpdate();
-        
+        entityManager
+                .getEntityManager()
+                .createNativeQuery(
+                        "INSERT INTO users (name, email, bio, created_at, updated_at) VALUES (?, ?, ?, ?, ?)")
+                .setParameter(1, "John Doe")
+                .setParameter(2, "john.doe@example.com")
+                .setParameter(3, "Software Engineer")
+                .setParameter(4, fiveDaysAgo)
+                .setParameter(5, fiveDaysAgo)
+                .executeUpdate();
+
         // Insert Jane Smith (more recent user)
-        entityManager.getEntityManager().createNativeQuery(
-            "INSERT INTO users (name, email, bio, created_at, updated_at) VALUES (?, ?, ?, ?, ?)"
-        ).setParameter(1, "Jane Smith")
-         .setParameter(2, "jane.smith@example.com")
-         .setParameter(3, "DevOps Engineer")
-         .setParameter(4, twoDaysAgo)
-         .setParameter(5, twoDaysAgo)
-         .executeUpdate();
-        
+        entityManager
+                .getEntityManager()
+                .createNativeQuery(
+                        "INSERT INTO users (name, email, bio, created_at, updated_at) VALUES (?, ?, ?, ?, ?)")
+                .setParameter(1, "Jane Smith")
+                .setParameter(2, "jane.smith@example.com")
+                .setParameter(3, "DevOps Engineer")
+                .setParameter(4, twoDaysAgo)
+                .setParameter(5, twoDaysAgo)
+                .executeUpdate();
+
         entityManager.flush();
-        
+
         // Retrieve the entities for use in tests
         johnDoe = userRepository.findByEmail("john.doe@example.com").orElseThrow();
         janeSmith = userRepository.findByEmail("jane.smith@example.com").orElseThrow();
@@ -129,7 +130,7 @@ class UserRepositoryTest {
     @Test
     void findUsersCreatedAfter_WithValidDate_ShouldReturnRecentUsers() {
         LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
-        
+
         List<User> result = userRepository.findUsersCreatedAfter(threeDaysAgo);
 
         assertThat(result).hasSize(1);
@@ -139,18 +140,19 @@ class UserRepositoryTest {
     @Test
     void findUsersCreatedAfter_WithVeryOldDate_ShouldReturnAllUsers() {
         LocalDateTime tenDaysAgo = LocalDateTime.now().minusDays(10);
-        
+
         List<User> result = userRepository.findUsersCreatedAfter(tenDaysAgo);
 
         assertThat(result).hasSize(2);
-        assertThat(result).extracting(User::getName)
+        assertThat(result)
+                .extracting(User::getName)
                 .containsExactlyInAnyOrder("John Doe", "Jane Smith");
     }
 
     @Test
     void findUsersCreatedAfter_WithFutureDate_ShouldReturnEmptyList() {
         LocalDateTime futureDate = LocalDateTime.now().plusDays(1);
-        
+
         List<User> result = userRepository.findUsersCreatedAfter(futureDate);
 
         assertThat(result).isEmpty();
@@ -191,12 +193,12 @@ class UserRepositoryTest {
     @Test
     void deleteUser_ShouldRemoveUser() {
         Long userId = johnDoe.getId();
-        
+
         userRepository.delete(johnDoe);
-        
+
         Optional<User> deletedUser = userRepository.findById(userId);
         assertThat(deletedUser).isEmpty();
-        
+
         // Verify that only one user remains
         List<User> remainingUsers = userRepository.findAll();
         assertThat(remainingUsers).hasSize(1);
@@ -206,12 +208,12 @@ class UserRepositoryTest {
     @Test
     void deleteById_ShouldRemoveUser() {
         Long userId = johnDoe.getId();
-        
+
         userRepository.deleteById(userId);
-        
+
         Optional<User> deletedUser = userRepository.findById(userId);
         assertThat(deletedUser).isEmpty();
-        
+
         // Verify that only one user remains
         List<User> remainingUsers = userRepository.findAll();
         assertThat(remainingUsers).hasSize(1);
@@ -221,10 +223,10 @@ class UserRepositoryTest {
     @Test
     void deleteAll_ShouldRemoveAllUsers() {
         userRepository.deleteAll();
-        
+
         List<User> users = userRepository.findAll();
         assertThat(users).isEmpty();
-        
+
         long count = userRepository.count();
         assertThat(count).isEqualTo(0);
     }
@@ -234,7 +236,8 @@ class UserRepositoryTest {
         List<User> users = userRepository.findAll();
 
         assertThat(users).hasSize(2);
-        assertThat(users).extracting(User::getName)
+        assertThat(users)
+                .extracting(User::getName)
                 .containsExactlyInAnyOrder("John Doe", "Jane Smith");
     }
 
@@ -274,4 +277,4 @@ class UserRepositoryTest {
 
         assertThat(count).isEqualTo(2);
     }
-} 
+}

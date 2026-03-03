@@ -1,7 +1,15 @@
 package br.com.arquivolivre.otelcrudapi.service;
 
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import br.com.arquivolivre.otelcrudapi.model.User;
 import br.com.arquivolivre.otelcrudapi.repository.UserRepository;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,24 +17,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-    @Mock
-    private UserRepository userRepository;
+    @Mock private UserRepository userRepository;
 
-    @InjectMocks
-    private UserService userService;
+    @InjectMocks private UserService userService;
 
     private User testUser;
     private List<User> testUsers;
@@ -246,7 +242,8 @@ class UserServiceTest {
 
     @Test
     void searchUsersByName_WithValidName_ShouldReturnMatchingUsers() {
-        when(userRepository.findByNameContainingIgnoreCase("John")).thenReturn(Arrays.asList(testUser));
+        when(userRepository.findByNameContainingIgnoreCase("John"))
+                .thenReturn(Arrays.asList(testUser));
 
         List<User> result = userService.searchUsersByName("John");
 
@@ -257,7 +254,8 @@ class UserServiceTest {
 
     @Test
     void searchUsersByName_WithNoMatches_ShouldReturnEmptyList() {
-        when(userRepository.findByNameContainingIgnoreCase("Nonexistent")).thenReturn(Arrays.asList());
+        when(userRepository.findByNameContainingIgnoreCase("Nonexistent"))
+                .thenReturn(Arrays.asList());
 
         List<User> result = userService.searchUsersByName("Nonexistent");
 
@@ -295,4 +293,4 @@ class UserServiceTest {
         assertThat(result).hasSize(2);
         verify(userRepository, times(1)).findUsersCreatedAfter(any(LocalDateTime.class));
     }
-} 
+}

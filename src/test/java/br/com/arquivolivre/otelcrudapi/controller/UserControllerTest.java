@@ -1,8 +1,19 @@
 package br.com.arquivolivre.otelcrudapi.controller;
 
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import br.com.arquivolivre.otelcrudapi.model.User;
 import br.com.arquivolivre.otelcrudapi.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,30 +24,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(UserController.class)
 class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @Autowired private MockMvc mockMvc;
 
-    @MockBean
-    private UserService userService;
+    @MockBean private UserService userService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Autowired private ObjectMapper objectMapper;
 
     private User testUser;
     private List<User> testUsers;
@@ -93,8 +89,7 @@ class UserControllerTest {
     void getUserById_WithInvalidId_ShouldReturnNotFound() throws Exception {
         when(userService.getUserById(999L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/api/users/999"))
-                .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/users/999")).andExpect(status().isNotFound());
 
         verify(userService, times(1)).getUserById(999L);
     }
@@ -129,9 +124,10 @@ class UserControllerTest {
 
         when(userService.createUser(any(User.class))).thenReturn(savedUser);
 
-        mockMvc.perform(post("/api/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newUser)))
+        mockMvc.perform(
+                        post("/api/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(newUser)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name", is("Alice Johnson")))
@@ -146,9 +142,10 @@ class UserControllerTest {
         User invalidUser = new User();
         // Missing required fields
 
-        mockMvc.perform(post("/api/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(invalidUser)))
+        mockMvc.perform(
+                        post("/api/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(invalidUser)))
                 .andExpect(status().isBadRequest());
     }
 
@@ -169,9 +166,10 @@ class UserControllerTest {
 
         when(userService.updateUser(eq(1L), any(User.class))).thenReturn(savedUser);
 
-        mockMvc.perform(put("/api/users/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedUser)))
+        mockMvc.perform(
+                        put("/api/users/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(updatedUser)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name", is("John Updated")))
@@ -184,8 +182,7 @@ class UserControllerTest {
     void deleteUser_WithValidId_ShouldReturnNoContent() throws Exception {
         doNothing().when(userService).deleteUser(1L);
 
-        mockMvc.perform(delete("/api/users/1"))
-                .andExpect(status().isNoContent());
+        mockMvc.perform(delete("/api/users/1")).andExpect(status().isNoContent());
 
         verify(userService, times(1)).deleteUser(1L);
     }
@@ -205,8 +202,7 @@ class UserControllerTest {
     void searchUsers_WithValidName_ShouldReturnMatchingUsers() throws Exception {
         when(userService.searchUsersByName("John")).thenReturn(Arrays.asList(testUser));
 
-        mockMvc.perform(get("/api/users/search")
-                        .param("name", "John"))
+        mockMvc.perform(get("/api/users/search").param("name", "John"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -219,8 +215,7 @@ class UserControllerTest {
     void getRecentUsers_ShouldReturnRecentUsers() throws Exception {
         when(userService.getRecentUsers(7)).thenReturn(testUsers);
 
-        mockMvc.perform(get("/api/users/recent")
-                        .param("days", "7"))
+        mockMvc.perform(get("/api/users/recent").param("days", "7"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -260,4 +255,4 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.threadClass", notNullValue()))
                 .andExpect(jsonPath("$.timestamp", notNullValue()));
     }
-} 
+}

@@ -7,5 +7,5 @@ public class OpenTelemetryConfig {
 
     // OpenTelemetry configuration is handled by the Spring Boot starter
     // Custom configuration can be added here if needed
-    
-} 
+
+}

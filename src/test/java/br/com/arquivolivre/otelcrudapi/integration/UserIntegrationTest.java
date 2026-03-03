@@ -1,8 +1,13 @@
 package br.com.arquivolivre.otelcrudapi.integration;
 
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import br.com.arquivolivre.otelcrudapi.model.User;
 import br.com.arquivolivre.otelcrudapi.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,30 +20,22 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDateTime;
-
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 @SpringBootTest
 @AutoConfigureWebMvc
-@TestPropertySource(properties = {
-    "spring.datasource.url=jdbc:h2:mem:testdb",
-    "spring.threads.virtual.enabled=true",
-    "logging.level.com.example.otelcrudapi=DEBUG"
-})
+@TestPropertySource(
+        properties = {
+            "spring.datasource.url=jdbc:h2:mem:testdb",
+            "spring.threads.virtual.enabled=true",
+            "logging.level.com.example.otelcrudapi=DEBUG"
+        })
 @Transactional
 class UserIntegrationTest {
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+    @Autowired private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Autowired private ObjectMapper objectMapper;
 
     private MockMvc mockMvc;
 
@@ -55,9 +52,10 @@ class UserIntegrationTest {
         newUser.setEmail("integration@test.com");
         newUser.setBio("Integration Test Bio");
 
-        mockMvc.perform(post("/api/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newUser)))
+        mockMvc.perform(
+                        post("/api/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(newUser)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name", is("Integration Test User")))
@@ -94,9 +92,10 @@ class UserIntegrationTest {
         updatedUser.setEmail("updated@example.com");
         updatedUser.setBio("Updated Bio");
 
-        mockMvc.perform(put("/api/users/" + savedUser.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedUser)))
+        mockMvc.perform(
+                        put("/api/users/" + savedUser.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(updatedUser)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name", is("Updated User")))
@@ -138,8 +137,7 @@ class UserIntegrationTest {
         createTestUser("John Doe", "john@example.com");
         createTestUser("Jane Smith", "jane@example.com");
 
-        mockMvc.perform(get("/api/users/search")
-                        .param("name", "John"))
+        mockMvc.perform(get("/api/users/search").param("name", "John"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -151,8 +149,7 @@ class UserIntegrationTest {
         createTestUser();
         createTestUser("Recent User", "recent@example.com");
 
-        mockMvc.perform(get("/api/users/recent")
-                        .param("days", "7"))
+        mockMvc.perform(get("/api/users/recent").param("days", "7"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -178,9 +175,10 @@ class UserIntegrationTest {
         duplicateUser.setEmail("test@example.com"); // Same email as existing user
         duplicateUser.setBio("Duplicate Bio");
 
-        mockMvc.perform(post("/api/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(duplicateUser)))
+        mockMvc.perform(
+                        post("/api/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(duplicateUser)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error", containsString("already exists")));
     }
@@ -190,16 +188,16 @@ class UserIntegrationTest {
         User invalidUser = new User();
         // Missing required fields
 
-        mockMvc.perform(post("/api/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(invalidUser)))
+        mockMvc.perform(
+                        post("/api/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(invalidUser)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void getNonExistentUser_ShouldReturnNotFound() throws Exception {
-        mockMvc.perform(get("/api/users/999"))
-                .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/users/999")).andExpect(status().isNotFound());
     }
 
     @Test
@@ -209,9 +207,10 @@ class UserIntegrationTest {
         updatedUser.setEmail("updated@example.com");
         updatedUser.setBio("Updated Bio");
 
-        mockMvc.perform(put("/api/users/999")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedUser)))
+        mockMvc.perform(
+                        put("/api/users/999")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(updatedUser)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error", containsString("not found")));
     }
@@ -250,7 +249,10 @@ class UserIntegrationTest {
         mockMvc.perform(get("/api/users/thread-info"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.isVirtual", notNullValue())); // During testing, may run on main thread
+                .andExpect(
+                        jsonPath(
+                                "$.isVirtual",
+                                notNullValue())); // During testing, may run on main thread
     }
 
     @Test
@@ -261,13 +263,15 @@ class UserIntegrationTest {
         newUser.setEmail("lifecycle@example.com");
         newUser.setBio("Lifecycle Bio");
 
-        String response = mockMvc.perform(post("/api/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newUser)))
-                .andExpect(status().isCreated())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
+        String response =
+                mockMvc.perform(
+                                post("/api/users")
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(newUser)))
+                        .andExpect(status().isCreated())
+                        .andReturn()
+                        .getResponse()
+                        .getContentAsString();
 
         User createdUser = objectMapper.readValue(response, User.class);
         Long userId = createdUser.getId();
@@ -283,19 +287,18 @@ class UserIntegrationTest {
         updatedUser.setEmail("updated.lifecycle@example.com");
         updatedUser.setBio("Updated Lifecycle Bio");
 
-        mockMvc.perform(put("/api/users/" + userId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedUser)))
+        mockMvc.perform(
+                        put("/api/users/" + userId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(updatedUser)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("Updated Lifecycle User")));
 
         // Delete user
-        mockMvc.perform(delete("/api/users/" + userId))
-                .andExpect(status().isNoContent());
+        mockMvc.perform(delete("/api/users/" + userId)).andExpect(status().isNoContent());
 
         // Verify user is deleted
-        mockMvc.perform(get("/api/users/" + userId))
-                .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/users/" + userId)).andExpect(status().isNotFound());
     }
 
     private User createTestUser() {
@@ -311,4 +314,4 @@ class UserIntegrationTest {
         user.setUpdatedAt(LocalDateTime.now());
         return userRepository.save(user);
     }
-} 
+}
