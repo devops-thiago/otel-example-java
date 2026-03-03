@@ -131,8 +131,8 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ secrets.DOCKER_USERNAME }}/otel-crud-api:latest
-          ${{ secrets.DOCKER_USERNAME }}/otel-crud-api:${{ github.sha }}
+          ${{ secrets.DOCKER_USERNAME }}/otel-crud-api-java:latest
+          ${{ secrets.DOCKER_USERNAME }}/otel-crud-api-java:${{ github.sha }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
     
