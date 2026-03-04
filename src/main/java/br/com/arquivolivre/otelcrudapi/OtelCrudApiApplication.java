@@ -9,5 +9,4 @@ public class OtelCrudApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(OtelCrudApiApplication.class, args);
     }
-
-} 
+}

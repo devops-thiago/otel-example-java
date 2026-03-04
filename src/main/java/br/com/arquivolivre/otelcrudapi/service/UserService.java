@@ -2,22 +2,21 @@ package br.com.arquivolivre.otelcrudapi.service;
 
 import br.com.arquivolivre.otelcrudapi.model.User;
 import br.com.arquivolivre.otelcrudapi.repository.UserRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
 @Service
 @Transactional
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -53,12 +52,13 @@ public class UserService {
 
     public User createUser(User user) {
         logger.info("Creating new user: {}", user.getEmail());
-        
+
         if (userRepository.existsByEmail(user.getEmail())) {
             logger.warn("User with email {} already exists", user.getEmail());
-            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
+            throw new IllegalArgumentException(
+                    "User with email " + user.getEmail() + " already exists");
         }
-        
+
         User savedUser = userRepository.save(user);
         logger.info("User created successfully with id: {}", savedUser.getId());
         return savedUser;
@@ -66,21 +66,27 @@ public class UserService {
 
     public User updateUser(Long id, User userDetails) {
         logger.info("Updating user with id: {}", id);
-        
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
-        
+
+        User user =
+                userRepository
+                        .findById(id)
+                        .orElseThrow(
+                                () ->
+                                        new IllegalArgumentException(
+                                                "User not found with id: " + id));
+
         // Check if email is being changed and if the new email already exists
-        if (!user.getEmail().equals(userDetails.getEmail()) && 
-            userRepository.existsByEmail(userDetails.getEmail())) {
+        if (!user.getEmail().equals(userDetails.getEmail())
+                && userRepository.existsByEmail(userDetails.getEmail())) {
             logger.warn("Email {} already exists", userDetails.getEmail());
-            throw new IllegalArgumentException("Email " + userDetails.getEmail() + " already exists");
+            throw new IllegalArgumentException(
+                    "Email " + userDetails.getEmail() + " already exists");
         }
-        
+
         user.setName(userDetails.getName());
         user.setEmail(userDetails.getEmail());
         user.setBio(userDetails.getBio());
-        
+
         User updatedUser = userRepository.save(user);
         logger.info("User updated successfully: {}", updatedUser.getEmail());
         return updatedUser;
@@ -88,12 +94,12 @@ public class UserService {
 
     public void deleteUser(Long id) {
         logger.info("Deleting user with id: {}", id);
-        
+
         if (!userRepository.existsById(id)) {
             logger.warn("User not found with id: {}", id);
             throw new IllegalArgumentException("User not found with id: " + id);
         }
-        
+
         userRepository.deleteById(id);
         logger.info("User deleted successfully with id: {}", id);
     }
@@ -114,4 +120,4 @@ public class UserService {
         logger.info("Found {} recent users", users.size());
         return users;
     }
-} 
+}
