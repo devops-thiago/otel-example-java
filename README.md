@@ -1,15 +1,16 @@
-# OpenTelemetry CRUD API
+# OpenTelemetry Spring Boot Example
 
-[![CI/CD Pipeline](https://github.com/devops-thiago/otel-example-java/actions/workflows/ci.yml/badge.svg)](https://github.com/devops-thiago/otel-example-java/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/devops-thiago/otel-example-java/branch/main/graph/badge.svg)](https://codecov.io/gh/devops-thiago/otel-example-java)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=devops-thiago_otel-example-java&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=devops-thiago_otel-example-java)
-[![Dependabot Status](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg)](https://github.com/devops-thiago/otel-example-java/network/dependencies)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Java](https://img.shields.io/badge/Java-24-orange.svg)](https://openjdk.org/projects/jdk/24/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.7-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://hub.docker.com/)
-[![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-2.25.0-blueviolet.svg)](https://opentelemetry.io/)
-[![JaCoCo](https://img.shields.io/badge/JaCoCo-0.8.14-brightgreen.svg)](https://www.jacoco.org/jacoco/)
+[![CI](https://img.shields.io/github/actions/workflow/status/devops-thiago/otel-example-java/ci.yml?branch=main&label=CI)](https://github.com/devops-thiago/otel-example-java/actions)
+[![Java](https://img.shields.io/badge/java-24-ED8B00?logo=openjdk)](https://openjdk.org)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.7-6DB33F?logo=spring)](https://spring.io/projects/spring-boot)
+[![License](https://img.shields.io/github/license/devops-thiago/otel-example-java)](LICENSE)
+[![Codecov](https://img.shields.io/codecov/c/github/devops-thiago/otel-example-java?label=coverage)](https://app.codecov.io/gh/devops-thiago/otel-example-java)
+[![Sonar Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=devops-thiago_otel-example-java&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=devops-thiago_otel-example-java)
+[![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=devops-thiago_otel-example-java&metric=coverage)](https://sonarcloud.io/summary/new_code?id=devops-thiago_otel-example-java)
+[![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-enabled-blue?logo=opentelemetry)](https://opentelemetry.io)
+[![Docker](https://img.shields.io/badge/Docker-ready-blue?logo=docker)](https://www.docker.com)
+[![Docker Hub](https://img.shields.io/docker/v/thiagosg/otel-crud-api-java?logo=docker&label=Docker%20Hub)](https://hub.docker.com/r/thiagosg/otel-crud-api-java)
+[![Docker Pulls](https://img.shields.io/docker/pulls/thiagosg/otel-crud-api-java)](https://hub.docker.com/r/thiagosg/otel-crud-api-java)
 
 A comprehensive Java Spring Boot application demonstrating a complete CRUD API with OpenTelemetry integration and full observability stack for distributed tracing, metrics, and log aggregation.
 
