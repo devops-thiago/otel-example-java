@@ -21,7 +21,7 @@
 
     <properties>
         <java.version>24</java.version>
-        <spotless.version>2.44.5</spotless.version>
+        <spotless.version>3.3.0</spotless.version>
         <google-java-format.version>1.27.0</google-java-format.version>
         <sonar.organization>devops-thiago</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
