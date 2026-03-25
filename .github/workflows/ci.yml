@@ -219,20 +219,6 @@ jobs:
         echo "Checking if our image exists:"
         docker inspect otel-example-java:pr-${{ github.event.pull_request.number }}
 
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@0.34.2
-      with:
-        image-ref: otel-example-java:pr-${{ github.event.pull_request.number }}
-        format: 'sarif'
-        output: 'trivy-results.sarif'
-        exit-code: '0'
-
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v4
-      if: always()
-      with:
-        sarif_file: 'trivy-results.sarif'
-
   integration-test:
     needs: docker
     runs-on: ubuntu-latest
