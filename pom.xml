@@ -25,7 +25,7 @@
         <google-java-format.version>1.27.0</google-java-format.version>
         <sonar.organization>devops-thiago</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <opentelemetry.agent.version>2.25.0</opentelemetry.agent.version>
+        <opentelemetry.agent.version>2.27.0</opentelemetry.agent.version>
     </properties>
 
     <dependencyManagement>
