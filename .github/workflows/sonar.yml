@@ -21,25 +21,25 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v6
+      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       with:
         fetch-depth: 0  # Shallow clones should be disabled for better analysis
     
     - name: Set up JDK 24
-      uses: actions/setup-java@v5
+      uses: actions/setup-java@ad2b38190b15e4d6bdf0c97fb4fca8412226d287 # v5
       with:
         java-version: '24'
         distribution: 'corretto'
     
     - name: Cache SonarCloud packages
-      uses: actions/cache@v5
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
       with:
         path: ~/.sonar/cache
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
     
     - name: Cache Maven dependencies
-      uses: actions/cache@v5
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -49,11 +49,8 @@ jobs:
       run: mvn clean compile test-compile test jacoco:report
     
     - name: SonarCloud Scan
-      uses: SonarSource/sonarqube-scan-action@v7.0.0
+      uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9 # v7.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://sonarcloud.io
-      with:
-        scannerVersion: 7.0.2.4839
-        scannerBinariesUrl: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli
